@@ -1,0 +1,18 @@
+<h1>User Login</h1>
+
+<div class="col s6">
+	Please enter your email and password :
+	<%= form_tag do %>
+		<%= label_tag(:Email, "Your Email") %>
+		<%= text_field_tag(:Email) %>
+		<%= label_tag(:Password, "Your Email") %>
+		<%= text_field_tag(:Password) %>
+		<%= submit_tag "LOGIN", class: "btn form-control" %>
+	<% end %>
+	
+</div>
+<div class="col s6">
+	Don't have account signup here :<br>
+	<a class="btn form-control" href="/signup">Create accout</a>
+</div>
+
