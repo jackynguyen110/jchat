@@ -1,0 +1,29 @@
+<ul class="collection">
+    <% @messages.each do |m| %>
+    <li class="collection-item avatar">
+      <i class="material-icons circle">folder</i>
+      <span class="title"><%= m.sender.name == session[:user]["name"] ? "Self" :  m.sender.name %></span>
+      <p><%= m.body %><br>
+         <%= m.created_at %>
+      </p>
+      <a href="#" class="secondary-content">read at : <%= m.read_at.nil? ? "NOT READ" :  m.read_at %></a>
+    </li>
+    <%  end %>
+    <li style="border: none">
+    <%= form_tag("/sendmessage/#{@receiverUser.id}", method: "post") do %>
+      <div class="row">
+        <div class="col s12">
+        <h5>SEND MESSAGE HERE</h5>
+        </div>
+        <div class="col s10">
+          <input type="text" name="message[body]">
+          <input type="hidden" value="<%= @receiverUser.id %>" name="message[reciver_id]">
+        </div>
+        <div class="col s2">
+          <button class="btn" type="submit">Send</a>
+        </div>
+      </div>
+    <% end %>
+    </li>
+  </ul>
+ 

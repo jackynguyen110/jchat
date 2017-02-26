@@ -2,17 +2,24 @@
 
 <div class="col s6">
 	Please enter your email and password :
-	<%= form_for(@user, :html => {class: "form-horizontal", role: "form"}) do |f| %>
-		<%= f.label_field(:Name, "Your Name") %>
-		<%= f.text_field(:Name) %>
-		<%= f.label_field(:Email, "Your Email") %>
-		<%= f.text_field(:Email) %>
-		<%= f.label_field(:Password, "Your Password") %>
-		<%= text_field_tag(:Password) %>
-		<%= f.label_field(:ConfirmPassword, "confirm password") %>
-		<%= f.text_field(:ConfirmPassword) %>
-		<%= submit_tag "SINGUP", class: "btn form-control" %>
+	
+	<%= form_tag("/signup", method: "post") do %>
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input type="text" name="user[name]">
+		</div>
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="text" name="user[email]">
+		</div>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" name="user[password]">
+		</div>
+		<button class="btn" type="submit">Create Account</button>
+
 	<% end %>
+
 </div>
 <div class="col s6">
 </div>

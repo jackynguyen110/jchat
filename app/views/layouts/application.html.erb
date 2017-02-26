@@ -13,6 +13,7 @@
 
 		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+		<%= csrf_meta_tags %>
 	</head>
 	<body>
 		<header>
@@ -25,25 +26,38 @@
 							<a href="/">Find More Friends</a>
 						</li>
 						<li>
-							<%= link_to "Login", root_path if session[:user_id].nil? %>
+						<% if session[:user_id].nil? %>
+							<a href="/login" >Login</a>
+						<% else %>
+							<a href="/logout" >Logout</a>
+						<% end %>
 						</li>
 					</ul>
 				</div>
 			</nav>
 
 		</header>
+		<div class=col s12">
+					<div id="flash_messages">
+					  <% flash.each do |key, value| %>
+					    <%= content_tag(:div, value, :class => "flash #{key}") %>
+					  <% end %>
+					</div>
+				</div>
+
 		<main>
 			<div class="row" style="min-height: 900px">
+				
 				<div class="col s3">
 					<ul id="slide-out" class="side-nav fixed">
 						<li>
 							<div class="userView">
 								<div class="background">
-									<img src="<%= 'http://materializecss.com/images/office.jpg' if session[:user_id].nil? %>" />
+									<img src='http://materializecss.com/images/office.jpg' : session[:user]["avatar"]  %>" />
 								</div>
-								<a href="#!user"><%= image_tag("avatar1.jpg", class: "circle")%></a>
-								<a href="#!name"><span class="white-text name">John Doe</span></a>
-								<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+								<a href="#!user"><img src="<%= session[:user].nil? ? 'https://s-media-cache-ak0.pinimg.com/originals/d4/e7/aa/d4e7aa60eb6a782d5d25340debaa1ad6.jpg' :  session[:user]["avatar"] %> </a>
+								<a href="#!name"><span class="white-text name"><%= session[:user].nil? ? 'Welcome, Guest' :  session[:user]["name"] %> n</span></a>
+								<a href="#!email"><span class="white-text email"><%= session[:user].nil? ? '' :  session[:user]["name"] %></span></a>
 							</div>
 
 						</li>
@@ -54,9 +68,25 @@
 						<li>
 							<div class="divider"></div>
 						</li>
-						<li>
-							<a href="#!"><i class="material-icons">cloud</i>First Link With Icon <span class="sidebar-badge">[3]</span></a>
-						</li>
+						<% if session[:user].nil? == FALSE %>
+							<% currentUser = User.find(session[:user_id])
+								listFriend = currentUser.list_friends
+								listFriend.each do |i|
+							 %>	
+							 <% friend = User.find(i) 
+							 	unread = Message.countUnredMessage(session[:user_id], i)
+							 %>
+							 	<li > 
+								 	<a href="/readmessage/<%= i %>"
+								 	<% if unread > 0 %>
+								 		style="font-weight: bolder;color:blue" 
+								 	<% end %> 
+								 		class="waves-effect" > 
+								 		<%= friend.name %> <% if unread > 0 %>  - (  <%= unread %>  ) <% end %>
+								 	</a>
+							 	</li>
+							 <% end %>
+						<% end %>
 
 					</ul>
 				</div>

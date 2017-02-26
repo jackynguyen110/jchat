@@ -3,13 +3,20 @@
 	<div class="col s12 m4">
 		<div class="card">
 			<div class="card-image">
-				<img src="http://materializecss.com/images/office.jpg">
-				<span class="card-title">Card Title</span>
-				<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+				<img src="https://www.causes.com/assets/avatar_placeholder-9a2f53db6270aa02b5ae2c5af1ffc72b.svg">
+				<span class="card-title" style="color:red;font-weight: bolder;"> <%= user.name %> </span>
+				<span class="card-subtitle" style="color:green;font-weight: bolder;"> <%= user.email %> </span>
+				<% if !session[:user].nil? && !User.isFriend(session[:user_id], user.id) %>
+				<a class="btn-floating halfway-fab waves-effect waves-light red" href="/addfriend/<%= user.id %>"><i class="material-icons">add</i></a>
+				<% end %>
 			</div>
 			<div class="card-content">
+			<% if !session[:user].nil? && User.isFriend(session[:user_id], user.id) %>
+				<a href="/sendmessage/<%= user.id %>" class="btn">  <i class="material-icons">message</i></a>
+				<a href="/deletefriend/<%= user.id %>" class="btn"><i class="material-icons">delete</i></a>
+			<% end %>
 				<p>
-					I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.
+					<%= user.description %>
 				</p>
 			</div>
 		</div>
