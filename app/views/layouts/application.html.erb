@@ -74,7 +74,7 @@
 								listFriend.each do |i|
 							 %>	
 							 <% friend = User.find(i) 
-							 	unread = Message.countUnredMessage(session[:user_id], i)
+							 	unread = Message.countUnredMessage(i, session[:user_id])
 							 %>
 							 	<li > 
 								 	<a href="/readmessage/<%= i %>"

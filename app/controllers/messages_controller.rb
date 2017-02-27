@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
       @currentUser = User.find(session[:user_id])
       @receiverUser = User.find(params[:id])
 
-      @messages = Message.where(sender_id: session[:user_id]).or(Message.where(reciver_id: params[:id]))
+      @messages = Message.where('(sender_id = ? and reciver_id = ?) or (sender_id = ? and reciver_id = ?) ', session[:user_id], params[:id], session[:user_id], params[:id])
       #abort()
     else
 

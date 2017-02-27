@@ -5,8 +5,8 @@
 	<%= form_tag("/login", method: "post") do %>
 		<%= label_tag(:Email, "Your Email") %>
 		<%= text_field_tag(:Email) %>
-		<%= label_tag(:Password, "Your Email") %>
-		<%= text_field_tag(:Password) %>
+		<%= label_tag(:Password, "Your Password") %>
+		<%= password_field_tag(:Password) %>
 		<%= submit_tag "LOGIN", class: "btn form-control" %>
 	<% end %>
 	

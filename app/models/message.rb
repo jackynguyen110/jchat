@@ -3,7 +3,7 @@ class Message < ApplicationRecord
   	belongs_to :reciver, class_name: 'User'
 
   	def self.countUnredMessage(reciver_id,sender_id)
-  		return Message.where(sender_id: sender_id).or(Message.where(reciver_id: reciver_id)).where(read_at: nil).count
+  		return Message.where(sender_id: sender_id).where(reciver_id: reciver_id).where(read_at: nil).count
   	end
 
   	def self.updateReadAt(reciver_id)
